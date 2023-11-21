@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block navbar %}
+<ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" href="{{ url_for('main')}}">
+        <i class="fa-solid fa-house"  style="color: #000000;"></i>
+        Inicio
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('classify')}}">
+        <i class="fa-solid fa-file" style="color: #000000;"></i>
+        Clasificador
+      </a>
+    </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="{{ url_for('recommend')}}">
+        <i class="fa-solid fa-list"  style="color: #000000;"></i>
+        Sistema de recomendación
+      </a>
+    </li>
+  </ul>
+{% endblock %}
+{% block content %}
+<div class="d-flex">
+  <div class="container m-4 justify-items-center align-items-center">
+    <img
+    id="img-tesis"
+    src="{{url_for('static', filename='img/tesis.avif')}}""
+    alt="RemindMe Logo"
+  />
+  </div>
+  <div class="container bg-white m-4 bordes">
+    <div class="row h-auto p-0">
+      <h2 class="text-center fs-1 my-2 p-0">Sistema de recomendación de tesis</h2>
+    </div>
+    <div class="row h-auto">
+      <form class="needs-validation" method="post" action="/recommendation" novalidate>
+          <div class="row g-3">
+            <div class="col-12">
+                <label for="faculty" class="form-label">Seleccione una facultad</label>
+                <div class="input-group has-validation">
+                    <select class="form-select" id="faculty" name="faculty" required>
+                        <option selected disabled value="">Choose...</option>
+                        {% for a in data.keys() %}
+                            <option>{{a}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="invalid-feedback">
+                    La facultad es obligatoria
+                </div>
+            </div>
+            <div class="col-12">
+              <label for="career" class="form-label">Seleccione una carrera</label>
+              <div class="input-group has-validation">
+                  <select class="form-select" id="career" required>
+                    <option selected disabled value="">Choose...</option>
+                  </select>
+              </div>
+              <div class="invalid-feedback">
+                  La carrera es obligatoria
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="title" class="form-label">Seleccione una tesis</label>
+              <div class="input-group has-validation">
+                  <select class="form-select" id="title" name="title" required>
+                    <option selected disabled value="">Choose...</option>
+                  </select>
+              </div>
+              <div class="invalid-feedback">
+                  Titulo de tesis es obligatorio
+              </div>
+            </div>
+            <div class="mt-3">
+            <div class="form-check">
+              <input id="modelo1" name="modelo" type="radio" class="form-check-input" required value="modelo1">
+              <label class="form-check-label" for="modelo1">Modelo 1 (distancia de cosenos)</label>
+            </div>
+            <div class="form-check">
+              <input id="modelo2" name="modelo" type="radio" class="form-check-input" required value="modelo2">
+              <label class="form-check-label" for="modelo2">Modelo 2 (distancia de manhattan)</label>
+            </div>
+            </div>
+          <hr class="my-4">
+          <div class="d-flex justify-content-center mb-2">
+            <button class="w-75 btn btn-primary btn-lg" type="submit">Buscar textos similares</button>
+          </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
